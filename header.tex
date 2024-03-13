@@ -1,0 +1,290 @@
+% header.tex
+\documentclass[a4paper,11pt,english,oneside]{book}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,bottom=2.5cm,top=4cm, headsep=1.5cm]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[english]{babel}
+\usepackage[pdftex]{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath,amssymb,subfigure}
+\usepackage{enumerate}
+\usepackage{lipsum} 
+
+\usepackage[utf8]{inputenc}
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{$#2$}} % Allows equations to be scaled
+
+\usepackage{csquotes} % Addition to babel package; Needs to be run after loading the package "inputenc"
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[lf]{Baskervaldx}				% lining figures
+\usepackage[bigdelims,vvarbb]{newtxmath}	% math italic letters from Nimbus Roman
+\usepackage[cal=boondoxo]{mathalfa}			% mathcal from STIX, unslanted a bit
+\renewcommand*\oldstylenums[1]{\textosf{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Links and references
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{url}
+\usepackage{varioref}
+\usepackage[hyperfootnotes=false]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,      
+    urlcolor=blue,
+    citecolor=black
+}
+\usepackage{cleveref}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Extra packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{acronym}						% To display a list of defined acronyms
+\usepackage{adjustbox}						% Can be used to rezise tables and graphs
+\usepackage{booktabs}						% For nicer tables
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define line spacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\baselinestretch}{1.25}
+\usepackage{setspace}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
+
+\usepackage{enumitem}
+\setlist[1]{topsep=2pt, itemsep=3pt, parsep=4pt}
+\setlist[2]{topsep=0pt, itemsep=1pt, parsep=2pt}
+\setlist[3]{topsep=-1pt, noitemsep}
+%\newenvironment{myitemize}{%
+%	\vspace{-0.2cm}
+%	\begin{itemize}
+%		\setlength{\itemsep}{0pt}
+%		\setlength{\parskip}{0pt}
+%		\setlength{\parsep}{0pt}     }
+%	{ \end{itemize}                  }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BibLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[style=apa, natbib=true, maxbibnames=99, backend=biber]{biblatex}
+\addbibresource{references/literature.bib}
+%\bibliographystyle{abbrvdin.bst}
+\renewcommand\bibname{References}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define the header and footer
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\pagestyle{plain}
+\usepackage{lastpage}									% Allows for the total page count (last page number) to be used
+\usepackage{fancyhdr}                                   % Includes the fancy header package
+
+\let\MakeUppercase\relax
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}			% Should make the \chaptermark command work
+\renewcommand{\sectionmark}[1]{\markright{#1}}			% Removes the section number from the \rightmark command
+
+\fancypagestyle{fancy}{%                                % Redifines the page style "fancy", which is used on normal pages
+   \fancyhf{}                                           % Clears all header and footers
+   \renewcommand{\headrulewidth}{1pt}                   % Sets the toprule
+   \renewcommand{\footrulewidth}{0pt}                   % Removes the bottomrule
+   \lhead{\leftmark :\ \rightmark}                      % Sets the left header to "chaper name: section name"
+   \rhead{Page \thepage{}}								% Sets the right header to the page number
+}
+
+% Redefine the plain page style
+\fancypagestyle{plain}{%								% Redifines the page style "plain", which is used on the first page of a new chapter
+  \fancyhf{}%											% Clears all header and footers
+  \renewcommand{\headrulewidth}{1pt}                    % Line at the header visible
+  \renewcommand{\footrulewidth}{0pt}                    % Line at the footer invisible
+  \lhead{\chaptername\ \thechapter\ $-$\ \leftmark}     % Sets the left footer to the chaper name
+  \rhead{Page \thepage{}}                               % Sets the right footer to the pager number
+}
+
+% Define a new style for the content lists
+\fancypagestyle{referencelist}{%
+	\fancyhf{}
+	\lhead{}
+	\rhead{}  
+	\cfoot{\thepage}
+	\renewcommand{\headrulewidth}{1pt}
+	\renewcommand{\footrulewidth}{0pt}
+}
+
+% Define a new style for the appendix
+\fancypagestyle{appendix}{%
+	\fancyhf{}
+	\lhead{Appendix}
+	\rhead{Page \thepage{}}
+	\renewcommand{\headrulewidth}{1pt}
+	\renewcommand{\footrulewidth}{0pt}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter Title Design
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+   \def\@makechapterhead#1{%
+     %%%%\vspace*{50\p@}% %%% removed!
+     {\parindent \z@ \raggedright \normalfont
+       \ifnum \c@secnumdepth >\m@ne
+           \huge\bfseries \@chapapp\space \thechapter
+           \par\nobreak
+           \vskip 20\p@		% Skip between Chapter and Section
+       \fi
+       \interlinepenalty\@M
+      \Huge \bfseries #1\par\nobreak
+       \vskip 40\p@			% Skip between Section an text
+     }}
+   \def\@makeschapterhead#1{%
+     %%%%%\vspace*{50\p@}% %%% removed!
+     {\parindent \z@ \raggedright
+       \normalfont
+       \interlinepenalty\@M
+       \Huge \bfseries  #1\par\nobreak
+       \vskip 30\p@			% Skip between Table Of (Contents) and the table
+     }}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Titlepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\UDOTitle}[9]{
+	
+	\thispagestyle{empty}
+	\includegraphics[width=3in]{figures/tud_logo_rgb.jpg}
+	\vspace*{\stretch{1}}
+	\\
+	{\parindent0cm
+		\rule{\linewidth}{.1ex}}
+	\begin{flushright}
+		\vspace*{\stretch{1}}
+		\sffamily\bfseries\Huge
+		#1\\
+		\vspace*{\stretch{1}}
+		\sffamily\bfseries\large
+		#2\\
+		\vspace*{\stretch{1}}
+	\end{flushright}
+	\rule{\linewidth}{.1ex}
+	
+	\vspace*{\stretch{1}}
+	\begin{center}
+		
+		\vspace*{\stretch{1}}
+		\large #5\\
+		
+		\vspace*{\stretch{1}}
+		\large Study Program: #4 \\[1mm]
+		\large Enrollment Number: #3\\[1mm]
+		\large First Reviewer:  #8 \\[1mm]
+		\large Second Reviewer:  #9 \\[1mm]
+		
+		\vspace*{\stretch{1}}
+		\large Working Time: #6
+		
+		\vspace*{\stretch{2}}
+		\large Department of #7\\
+		\large Faculty of Computer Science\\
+	\end{center}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Figures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{float}
+%\usepackage{wrapfig}
+
+% Note: \usepackage{subcaption} not allowed here
+
+%\usepackage{tikz}
+%\usetikzlibrary{trees}
+
+\usepackage{pdfpages}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[plain,chapter]{algorithm}
+\usepackage{algorithmic}
+\makeatletter
+\renewcommand{\ALG@name}{Algorithm}
+\makeatother
+
+\renewcommand{\listalgorithmname}{List of Algorithms}
+
+%\renewcommand{\algorithmicrequire}{\textit{Eingabe:}}
+%\renewcommand{\algorithmicensure}{\textit{Ausgabe:}}
+%\floatname{algorithm}{Algorithmus}
+%\renewcommand{\listalgorithmname}{Algorithmenverzeichnis}
+%\renewcommand{\algorithmiccomment}[1]{\color{grau}{// #1}}
+
+%\usepackage{minted}
+\usepackage{listings}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{orange}{rgb}{1,0.5,0}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{orange},
+  keywords=[2]{PARAMETER_MEASURE_TYPES, MEASURE_TYPES, NUMERICAL_MEASURES_TYPE, PARAMETER_NUMERICAL_MEASURE},
+  keywordstyle=[2]{\color{blue}},
+  commentstyle=\color{gray},
+  stringstyle=\color{dkgreen},
+  identifierstyle=,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Additional definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Theorem-Environments
+\usepackage[amsmath,thmmarks]{ntheorem}
+
+% Caption Package
+\usepackage[margin=0pt,font=small,labelfont=bf]{caption}
+
+% Redefine the display of the table of contents
+%\setcounter{secnumdepth}{5}
+%\setcounter{tocdepth}{5}
+
+% Adjust Floating Environments anpassen
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+
+% For the book format: Adds an empty page and the next one is to the rigth
+\newcommand{\blankpage}{
+ \clearpage{\pagestyle{empty}\cleardoublepage}
+}
+
+% Formating the page
+\usepackage{microtype}
+% Do not allow single lines at the end of a page
+\clubpenalty = 10000
+% Do not allow single lines at the beginning of a page
+\widowpenalty = 10000 \displaywidowpenalty = 10000

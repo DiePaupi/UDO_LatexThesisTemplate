@@ -1,0 +1,52 @@
+% !TEX root = ../main.tex
+\chapter{Example Chapter} \label{chapter:example_chapter}
+
+Please note that there are different ways to cite your sources:
+\begin{enumerate}
+	\item Within your text, e.g. ``\citet[81]{hammer1993reengineering} showed that $\dots$"
+	\item As internet source: \citet{diewi}
+	\item Seperated: 
+		\begin{itemize}
+			\item With \texttt{cite} (page no. are only possible with a single source):
+				\begin{itemize}
+					\item \cite[685]{janiesch2021machine}
+					\item \cite{janiesch2021machine, herm2021symbolic}
+				\end{itemize}
+			\item With \texttt{cites}: 
+				\begin{itemize}
+					\item \cites[685]{janiesch2021machine}
+					\item \cites[685]{janiesch2021machine}[289]{herm2021symbolic}
+				\end{itemize}
+			\item With \texttt{citep} (page no. are only possible with a single source): 
+				\begin{itemize}
+					\item \citep[685]{janiesch2021machine}
+					\item \citep{janiesch2021machine, herm2021symbolic}
+				\end{itemize}
+		\end{itemize}
+	\item And references within this document are done by setting labels and using them as:
+		\begin{itemize}
+			\item ``\autoref{chapter:introduction}" to auto fill in the thing (chapter /  section / figure / etc.) the label is referencing
+			\item ``\cref{chapter:introduction}" does the same by using the \texttt{cleverref} package, which supports more labels and things like ``\crefrange*{chapter:introduction}{chapter:conclusion}"
+			\item ``chapter~\ref{chapter:introduction}" where the referenced thing is manually written in front of its number
+		\end{itemize}
+\end{enumerate}
+
+%\lipsum[14-14]
+
+
+
+\section{Section A}
+\label{subsection:a}
+
+\lipsum[15-18]
+
+
+
+\section{Section B}
+\label{subsection:b}
+
+\subsection{Subsection B.a}
+\lipsum[19-21]
+
+\subsection{Subsection B.b}
+\lipsum[22-23]
