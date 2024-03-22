@@ -37,8 +37,8 @@
     colorlinks=true,
     linkcolor=black,
     filecolor=black,      
-    urlcolor=blue,
-    citecolor=black
+ 	urlcolor=MidnightBlue,
+	citecolor=MidnightBlue
 }
 \usepackage{cleveref}
 
@@ -79,6 +79,11 @@
 \addbibresource{references/literature.bib}
 %\bibliographystyle{abbrvdin.bst}
 \renewcommand\bibname{References}
+
+% Note: The following commands need the "url" package
+\setcounter{biburlnumpenalty}{100}
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburllcpenalty}{100}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -194,8 +199,8 @@
 		\large Working Time: #6
 		
 		\vspace*{\stretch{2}}
-		\large Department of #7\\
-		\large Faculty of Computer Science\\
+		\large Chair of #7\\
+		\large Department of Computer Science\\
 	\end{center}
 }
 
