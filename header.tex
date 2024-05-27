@@ -30,15 +30,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Links and references
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{citec}{rgb}{0.0, 0.33, 0.71}
+\definecolor{defc}{rgb}{0.0, 0.5, 0.0}
+
 \usepackage{url}
 \usepackage{varioref}
-\usepackage[hyperfootnotes=false]{hyperref}
+\usepackage[hyperfootnotes=false, 
+pdftex,
+pdfauthor	= {},
+pdftitle	= {},
+pdfsubject	= {},
+pdfkeywords	= {}]{hyperref}
 \hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    filecolor=black,      
- 	urlcolor=MidnightBlue,
-	citecolor=MidnightBlue
+	colorlinks=true,
+	linkcolor=black,
+	filecolor=black,      
+	urlcolor=citec,
+	citecolor=citec
 }
 \usepackage{cleveref}
 
@@ -49,6 +57,8 @@
 \usepackage{acronym}						% To display a list of defined acronyms
 \usepackage{adjustbox}						% Can be used to rezise tables and graphs
 \usepackage{booktabs}						% For nicer tables
+\usepackage{multirow}						% For multirow cells in tables
+\usepackage{tabularx}						% For tabularx tables where X cloumns auto adjust to long content
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -201,6 +211,7 @@
 		\vspace*{\stretch{2}}
 		\large Chair of #7\\
 		\large Department of Computer Science\\
+		\large TU Dortmund University\\
 	\end{center}
 }
 
@@ -293,3 +304,167 @@
 \clubpenalty = 10000
 % Do not allow single lines at the beginning of a page
 \widowpenalty = 10000 \displaywidowpenalty = 10000
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definitions for abbreviations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xspace}
+\newcommand{\ao}{a.\nolinebreak[4]\hspace{0.125em}\nolinebreak[4]o.\@\xspace} % a.o. = among others -> unter anderem / u.a.
+\newcommand{\eg}{e.\nolinebreak[4]\hspace{0.125em}\nolinebreak[4]g.\@\xspace} % e.g. = exempli gratia (latin) -> zum Beispiel / z.B.
+\newcommand{\ie}{i.\nolinebreak[4]\hspace{0.125em}\nolinebreak[4]e.\@\xspace} % i.e. = id est (latin) -> das heißt / d.h.
+\newcommand{\iow}{i.\nolinebreak[4]\hspace{0.125em}\nolinebreak[4]o.\nolinebreak[4]\hspace{0.125em}\nolinebreak[4]w.\@\xspace}	% iow. = in other words
+\newcommand{\wrt}{w.\nolinebreak[4]\hspace{0.125em}\nolinebreak[4]r.\nolinebreak[4]\hspace{0.125em}\nolinebreak[4]t.\@\xspace} % w.r.t. = with regards to
+\newcommand{\cf}{cf.\@\xspace}		% cf.  = confer (latin) -> vergleiche / vgl.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Additional definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Theorem-Environments
+\usepackage[amsmath,thmmarks]{ntheorem}
+
+% Caption Package
+\usepackage[margin=0pt,font=small,labelfont=bf]{caption}
+
+% Redefine the display of the table of contents
+%\setcounter{secnumdepth}{5}
+%\setcounter{tocdepth}{5}
+
+% Adjust Floating Environments anpassen
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+
+% For the book format: Adds an empty page and the next one is to the rigth
+%\newcommand{\blankpage}{
+%	\clearpage{\pagestyle{empty}\cleardoublepage}
+%}
+
+% Formating the page
+\usepackage{microtype}
+% Do not allow single lines at the end of a page
+\clubpenalty = 10000
+% Do not allow single lines at the beginning of a page
+\widowpenalty = 10000 \displaywidowpenalty = 10000
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Umgebungen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[framemethod=TikZ]{mdframed}
+
+% Style %
+\mdfdefinestyle{enviStyle}{
+	innertopmargin = 10pt,
+	linewidth      = 1pt,
+	frametitlerule = true,
+	roundcorner    = 2pt%
+}
+
+% Counter für Definitionen und Beispiele %
+\newcounter{def}[section]\setcounter{def}{0}
+\renewcommand{\thedef}{\arabic{section}.\arabic{def}}
+\newcounter{bsp}[section]\setcounter{bsp}{0}
+\renewcommand{\thebsp}{\arabic{section}.\arabic{bsp}}
+\newcounter{pro}[section]\setcounter{pro}{0}
+\renewcommand{\thepro}{\arabic{section}.\arabic{pro}}
+
+\crefname{def}{definition}{definitions}
+\Crefname{def}{Definition}{Definition}
+\crefname{bsp}{example}{examples}
+\Crefname{bsp}{Example}{Examples}
+\crefname{pro}{proposition}{propositions}
+\Crefname{pro}{Proposition}{Propositions}
+
+% Environment mit counter mit zB \newenvironment{name}[args]{begin_def}{end_def}
+\newenvironment{CountingProposition}[2][]{%
+	\refstepcounter{pro}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={{\strut Proposition~\thepro}}}
+	}%
+	{\mdfsetup{%
+			frametitle={{\strut Proposition~\thepro:~#1}}}%
+	}%
+	\mdfsetup{
+		nobreak                   = true,
+		linecolor                 = gray,
+		frametitlebackgroundcolor = gray!50,
+		style                     = enviStyle
+	}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+\newenvironment{CDef}[2][]{%
+	\refstepcounter{def}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={{\strut Definition~\thedef}}}
+	}%
+	{\mdfsetup{%
+			frametitle={{\strut Definition~\thedef:~#1}}}%
+	}%
+	\mdfsetup{
+		nobreak                   = false,
+		linecolor                 = defc,
+		frametitlebackgroundcolor = defc!50,
+		style                     = enviStyle
+	}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+\newenvironment{CDefNB}[2][]{%
+	\refstepcounter{def}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={{\strut Definition~\thedef}}}
+	}%
+	{\mdfsetup{%
+			frametitle={{\strut Definition~\thedef:~#1}}}%
+	}%
+	\mdfsetup{
+		nobreak                   = true,
+		linecolor                 = defc,
+		frametitlebackgroundcolor = defc!50,
+		style                     = enviStyle
+	}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+\newenvironment{CExample}[2][]{%
+	\refstepcounter{bsp}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={{\strut Example~\thebsp}}}
+	}%
+	{\mdfsetup{%
+			frametitle={{\strut Example~\thebsp:~#1}}}%
+	}%
+	\mdfsetup{
+		nobreak                   = false,
+		linecolor                 = citec!50,
+		frametitlebackgroundcolor = citec!20,
+		style                     = enviStyle
+	}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+\newenvironment{CExampleNB}[2][]{%
+	\refstepcounter{bsp}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={{\strut Example~\thebsp}}}
+	}%
+	{\mdfsetup{%
+			frametitle={{\strut Example~\thebsp:~#1}}}%
+	}%
+	\mdfsetup{
+		nobreak                   = true,
+		linecolor                 = citec!50,
+		frametitlebackgroundcolor = citec!20,
+		style                     = enviStyle
+	}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
